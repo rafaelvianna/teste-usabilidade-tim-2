@@ -158,6 +158,10 @@
       cursor: pointer;
       text-indent: -9999px;
     }
+
+    .link-container {
+      position: relative;
+    }
   </style>
 </head>
 <body>
@@ -184,10 +188,12 @@
       <button onclick="handleClick(1)">
         <img src="./img/btn2.svg" alt="">
       </button>
-      <button onclick="handleClick(2)">
-        <img src="./img/btn3.svg" alt="">
-        <a href="https://seulink.com" class="btn-link-card"></a>
-      </button>
+      <div class="link-container">
+        <button onclick="handleClick(2)">
+          <img src="./img/btn3.svg" alt="">
+        </button>
+        <a href="https://seulink.com" class="btn-link-card" id="conditional-link"></a>
+      </div>
       <button onclick="handleClick(3)">
         <img src="./img/btn4.svg" alt="">
       </button>
@@ -384,7 +390,20 @@
 
       // Atualiza visual dos botões
       buttons.forEach((btn, i) => {
-        btn.classList.toggle('active', i === index);
+        const isActive = i === index;
+        btn.classList.toggle('active', isActive);
+
+        // Se for o botão dentro da link-container (index 2), controlar o link
+        if (i === 2) {
+          const link = document.getElementById('conditional-link');
+          if (isActive) {
+            link.setAttribute('href', 'https://seulink.com');
+            link.style.pointerEvents = 'auto';
+          } else {
+            link.removeAttribute('href');
+            link.style.pointerEvents = 'none';
+          }
+        }
       });
     }
 
